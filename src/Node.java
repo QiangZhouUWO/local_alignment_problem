@@ -6,16 +6,14 @@ public class Node {
     private Node leftChild;
     private Node rightChild;
     private Node parent;
-
-    //if the node is marked, it must be deleted after.
-    private boolean mark;
+    private int minY;
 
     //true for red, false for black.
     private boolean color;
 
     public Node(){
         color = false;
-        mark = false;
+        minY = Integer.MAX_VALUE;
     }
 
     public Node(Score sc){
@@ -26,15 +24,22 @@ public class Node {
         rightChild.setParent(this);
         parent = null;
         color = false;
-        mark = false;
+        minY = score.getY();
     }
 
     public void setMinY(int min){
-        score.setMinY(min);
+        minY = min;
     }
 
     public void setScore(Score sc){
         score = sc;
+        minY = this.getY();
+        renewMinY();
+        Node prt = this.getParent();
+        while (prt != null){
+            prt.renewMinY();
+            prt = prt.getParent();
+        }
     }
 
     public void setLeftChild(Node left){
@@ -57,19 +62,16 @@ public class Node {
         color = col;
     }
 
-    public void mark(){
-        mark = true;
-    }
-
     public void renewMinY(){
+        minY = this.getY();
         if (leftChild != null){
-            if (leftChild.getMinY() < score.getMinY()){
-                score.setMinY(leftChild.getMinY());
+            if (leftChild.getMinY() < minY){
+                minY = leftChild.getMinY();
             }
         }
         if (rightChild != null){
-            if (rightChild.getMinY() < score.getMinY()){
-                score.setMinY(rightChild.getMinY());
+            if (rightChild.getMinY() < minY){
+                minY = rightChild.getMinY();
             }
         }
     }
@@ -99,14 +101,37 @@ public class Node {
     }
 
     public int getMinY(){
-        return score.getMinY();
+        return minY;
     }
 
     public boolean getColor(){
         return color;
     }
 
-    public boolean isMarked(){
-        return mark;
+    public boolean isLeftChild(Node p){
+        if (p.getLeftChild().getScore() == null){
+            return false;
+        }
+        else if (this.getX() == p.getLeftChild().getX() && this.getY() == p.getLeftChild().getY() && this.getScore() == p.getLeftChild().getScore()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isRightChild(Node p){
+        if (p.getRightChild().getScore() == null){
+            return false;
+        }
+        else if (this.getX() == p.getRightChild().getX() && this.getY() == p.getRightChild().getY() && this.getScore() == p.getRightChild().getScore()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isLeaf(){
+        if (score == null){
+            return true;
+        }
+        return false;
     }
 }

@@ -5,29 +5,30 @@ import java.util.LinkedList;
  */
 public class Score {
 
-
     private int score;
     private int xLen;
     private int yLen;
-    private int minY;
     private boolean mark;
+    private int xx;
+    private int yy;
 
     public Score(){
         score = 0;
         xLen = 0;
         yLen = 0;
-        minY = 0;
         mark = false;
+        xx = 0;
+        yy = 0;
     }
 
-    public Score(int x, int y, int score){
+    public Score(int x, int y, int score, int xx, int yy){
         this.score = score;
         xLen = x;
         yLen = y;
-        minY = y;
         mark = false;
+        this.xx = xx;
+        this.yy = yy;
     }
-
 
     public  void setScore(int score){
         this.score = score;
@@ -36,10 +37,6 @@ public class Score {
     public void setXY(int x, int y){
         xLen = x;
         yLen = y;
-    }
-
-    public void setMinY(int min){
-        minY = min;
     }
 
     public void mark(){
@@ -58,11 +55,15 @@ public class Score {
         return yLen;
     }
 
-    public int getMinY(){
-        return minY;
-    }
-
     public boolean isMarked(){
         return mark;
+    }
+
+    public int getXX(){
+        return xx;
+    }
+
+    public int getYY(){
+        return yy;
     }
 }
