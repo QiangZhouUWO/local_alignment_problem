@@ -744,12 +744,14 @@ public class MergingPaths5 {
     }
 
     private static double concave1(double x){
-        double y = Math.pow(x, 0.26);
+        //double y = Math.pow(x, 0.26);
+        double y = Math.pow(x, 0.4);
         return y;
     }
 
     private static double concave2(double x){
-        double y = Math.pow(x, 0.4);
+        //double y = Math.pow(x, 0.4);
+        double y = Math.pow(Math.log10(x) + 1, 2.6);
         return y;
     }
 
